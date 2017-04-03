@@ -59,6 +59,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         data(){
             return {
@@ -79,14 +80,14 @@
                     password: this.authenticate.password
                 };
                 let component = this;
-                this.$http.post('/api/login', authenticate)
-                    .then(function (data) {
-                        if (data.body.meta.status == "fail") {
-                            component.message = data.body.meta.message;
-                            component.apiStatus = data.body.meta.status;
+                axios.post('/api/login', authenticate)
+                    .then(function (response) {
+                        if (response.data.meta.status == "fail") {
+                            component.message = response.data.meta.message;
+                            component.apiStatus = response.data.meta.status;
                         }
-                    }, function (data) {
-                        console.log(data);
+                    }, function (response) {
+                        console.log(response);
                     });
             }
         }

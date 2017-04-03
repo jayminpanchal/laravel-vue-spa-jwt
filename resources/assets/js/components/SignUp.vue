@@ -75,6 +75,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         data(){
             return {
@@ -93,19 +94,19 @@
         methods: {
             register(){
                 let component = this;
-                this.$http.post('/api/register', this.user)
-                    .then(function (data) {
-                        component.message = data.body.meta.message;
-                        component.apiStatus = data.body.meta.status;
-                        if (data.body.meta.status != "fail") {
+                axios.post('/api/register', this.user)
+                    .then(function (response) {
+                        component.message = response.data.meta.message;
+                        component.apiStatus = response.data.meta.status;
+                        if (response.data.meta.status != "fail") {
                             component.user.email = '';
                             component.user.password = '';
                             component.user.name = '';
                             component.user.confirm_password = '';
                             $("#reg-success").modal('show');
                         }
-                    }, function (data) {
-                        console.log(data);
+                    }, function (response) {
+                        console.log(response);
                     });
             }
         }
