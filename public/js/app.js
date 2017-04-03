@@ -10118,7 +10118,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             user: {
                 name: '',
                 email: '',
-                password: ''
+                password: '',
+                confirm_password: ''
             }
         };
     },
@@ -10131,6 +10132,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 component.message = data.body.meta.message;
                 component.apiStatus = data.body.meta.status;
                 if (data.body.meta.status != "fail") {
+                    component.user.email = '';
+                    component.user.password = '';
+                    component.user.name = '';
+                    component.user.confirm_password = '';
                     $("#reg-success").modal('show');
                 }
             }, function (data) {
@@ -10397,7 +10402,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.user.password = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-4 control-label",
+    attrs: {
+      "for": "password-confirm"
+    }
+  }, [_vm._v("Confirm Password")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.confirm_password),
+      expression: "user.confirm_password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "password-confirm",
+      "type": "password",
+      "name": "password_confirmation",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.user.confirm_password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.confirm_password = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "form-group text-center"
   }, [(_vm.apiStatus == 'fail') ? _c('p', {
     staticClass: "c-red m-b-0 font-15"
@@ -10411,29 +10448,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-dialog"
   }, [_c('div', {
     staticClass: "modal-content size"
-  }, [_vm._m(2), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "modal-body text-center"
   }, [_c('h4', [_vm._v(_vm._s(_vm.message))])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "col-md-4 control-label",
-    attrs: {
-      "for": "password-confirm"
-    }
-  }, [_vm._v("Confirm Password")]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "password-confirm",
-      "type": "password",
-      "name": "password_confirmation",
-      "required": ""
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "form-group"
   }, [_c('div', {

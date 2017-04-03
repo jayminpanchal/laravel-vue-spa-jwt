@@ -36,7 +36,7 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control"
-                                       name="password_confirmation" required>
+                                       name="password_confirmation" required v-model="user.confirm_password">
                             </div>
                         </div>
 
@@ -83,7 +83,8 @@
                 user: {
                     name: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    confirm_password: ''
                 }
             }
         },
@@ -97,6 +98,10 @@
                         component.message = data.body.meta.message;
                         component.apiStatus = data.body.meta.status;
                         if (data.body.meta.status != "fail") {
+                            component.user.email = '';
+                            component.user.password = '';
+                            component.user.name = '';
+                            component.user.confirm_password = '';
                             $("#reg-success").modal('show');
                         }
                     }, function (data) {
