@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="#" @submit.prevent="login">
+                    <form class="form-horizontal" method="POST" action="#" @submit.prevent="register">
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name</label>
                             <div class="col-md-6">
@@ -46,6 +46,12 @@
                                     Register
                                 </button>
                             </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <p v-if="apiStatus == 'fail'" class="c-red m-b-0 font-15">
+                                {{message}}
+                            </p>
                         </div>
                     </form>
                 </div>

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -44,9 +43,9 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-        $meta['code'] = 200;
-        $meta['message'] = "Successfully Registered";
+        $this->setMeta('code', 200);
+        $this->setMeta('message', 'Successfully Registered');
         // all good so return the token
-        return Response::json($meta);
+        return response()->json($this->setResponse());
     }
 }
