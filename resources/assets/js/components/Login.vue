@@ -82,7 +82,7 @@
                 let component = this;
                 axios.post('/api/login', authenticate)
                     .then(function (response) {
-                        if (response.data.meta.status == "fail") {
+                        if (response.data.meta.status === "fail") {
                             component.message = response.data.meta.message;
                             component.apiStatus = response.data.meta.status;
                         }

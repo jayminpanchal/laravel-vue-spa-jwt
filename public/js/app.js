@@ -10019,7 +10019,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             var component = this;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/login', authenticate).then(function (response) {
-                if (response.data.meta.status == "fail") {
+                if (response.data.meta.status === "fail") {
                     component.message = response.data.meta.message;
                     component.apiStatus = response.data.meta.status;
                 }
@@ -10137,7 +10137,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', this.user).then(function (response) {
                 component.message = response.data.meta.message;
                 component.apiStatus = response.data.meta.status;
-                if (response.data.meta.status != "fail") {
+                if (response.data.meta.status === "success") {
                     component.user.email = '';
                     component.user.password = '';
                     component.user.name = '';
