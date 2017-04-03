@@ -57,6 +57,20 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="reg-success" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content size">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4>{{message}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -74,16 +88,16 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
         },
         methods: {
             register(){
                 let component = this;
                 this.$http.post('/api/register', this.user)
                     .then(function (data) {
-                        if (data.body.meta.status == "fail") {
-                            component.message = data.body.meta.message;
-                            component.apiStatus = data.body.meta.status;
+                        component.message = data.body.meta.message;
+                        component.apiStatus = data.body.meta.status;
+                        if (data.body.meta.status != "fail") {
+                            $("#reg-success").modal('show');
                         }
                     }, function (data) {
                         console.log(data);
