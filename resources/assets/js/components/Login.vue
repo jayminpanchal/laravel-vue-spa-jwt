@@ -10,7 +10,8 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" required autofocus
+                                       v-model="authenticate.email">
                             </div>
                         </div>
 
@@ -18,7 +19,8 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" required
+                                       v-model="authenticate.password">
                             </div>
                         </div>
 
@@ -43,6 +45,12 @@
                                 </a>
                             </div>
                         </div>
+
+                        <div class="form-group text-center">
+                            <p v-if="apiStatus == 'fail'" class="c-red m-b-0 font-15">
+                                {{message}}
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -54,9 +62,8 @@
     export default {
         data(){
             return {
-                error: false,
-                success: false,
-                errorMessage: '',
+                apiStatus: '',
+                message: '',
                 authenticate: {
                     email: '',
                     password: ''
@@ -71,6 +78,16 @@
                     email: this.authenticate.email,
                     password: this.authenticate.password
                 };
+                let component = this;
+                this.$http.post('/api/login', authenticate)
+                    .then(function (data) {
+                        if (data.body.meta.status == "fail") {
+                            component.message = data.body.meta.message;
+                            component.apiStatus = data.body.meta.status;
+                        }
+                    }, function (data) {
+                        console.log(data);
+                    });
             }
         }
     }
