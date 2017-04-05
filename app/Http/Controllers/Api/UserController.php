@@ -32,7 +32,9 @@ class UserController extends Controller
         }
         $this->setMeta('status', 'ok');
         $this->setMeta('message', 'Logged in successfully.');
+        $user = JWTAuth::toUser($token)->makeHidden(['created_at', 'updated_at', 'id']);
         $this->setData('token', $token);
+        $this->setData('user', $user);
         return response()->json($this->setResponse());
     }
 
@@ -43,7 +45,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-        $this->setMeta('code', 200);
+        $this->setMeta('status', 'ok');
         $this->setMeta('message', 'Successfully Registered');
         // all good so return the token
         return response()->json($this->setResponse());

@@ -60,8 +60,10 @@
 
 <script>
     import axios from 'axios';
+    import MutationTypes from '../store/auth/MutationTypes';
+
     export default {
-        data(){
+        data() {
             return {
                 apiStatus: '',
                 message: '',
@@ -74,7 +76,7 @@
         mounted() {
         },
         methods: {
-            login(){
+            login() {
                 let authenticate = {
                     email: this.authenticate.email,
                     password: this.authenticate.password
@@ -82,7 +84,10 @@
                 let component = this;
                 axios.post('/api/login', authenticate)
                     .then(function (response) {
-                        if (response.data.meta.status === "fail") {
+                        console.log(response);
+                        if (response.data.meta.status === "ok") {
+                            component.$router.push('home');
+                        } else {
                             component.message = response.data.meta.message;
                             component.apiStatus = response.data.meta.status;
                         }

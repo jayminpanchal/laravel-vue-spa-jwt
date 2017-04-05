@@ -98,7 +98,7 @@
                     .then(function (response) {
                         component.message = response.data.meta.message;
                         component.apiStatus = response.data.meta.status;
-                        if (response.data.meta.status === "success") {
+                        if (response.data.meta.status === "ok") {
                             component.user.email = '';
                             component.user.password = '';
                             component.user.name = '';
