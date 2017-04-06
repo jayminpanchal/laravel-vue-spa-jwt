@@ -36,7 +36,8 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="btnLogin"
+                                        data-loading-text="<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Login">
                                     Login
                                 </button>
 
@@ -82,9 +83,11 @@
                     password: this.authenticate.password
                 };
                 let component = this;
+                $("#btnLogin").button('loading');
                 axios.post('/api/login', authenticate)
                     .then(function (response) {
-                        console.log(response);
+//                        console.log(response);
+                        $("#btnLogin").button('reset');
                         if (response.data.meta.status === "ok") {
                             component.$store.dispatch(MutationTypes.SAVE_USER, response);
                             component.$router.push('home');

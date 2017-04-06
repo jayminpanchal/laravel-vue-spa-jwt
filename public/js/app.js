@@ -11612,6 +11612,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -11636,8 +11637,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: this.authenticate.password
             };
             var component = this;
+            $("#btnLogin").button('loading');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/login', authenticate).then(function (response) {
-                console.log(response);
+                //                        console.log(response);
+                $("#btnLogin").button('reset');
                 if (response.data.meta.status === "ok") {
                     component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["a" /* SAVE_USER */], response);
                     component.$router.push('home');
@@ -42466,7 +42469,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "type": "submit"
+      "type": "submit",
+      "id": "btnLogin",
+      "data-loading-text": "<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Login"
     }
   }, [_vm._v("\n                                Login\n                            ")]), _vm._v(" "), _c('a', {
     staticClass: "btn btn-link",
