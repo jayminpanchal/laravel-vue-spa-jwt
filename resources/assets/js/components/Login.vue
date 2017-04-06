@@ -60,7 +60,7 @@
 
 <script>
     import axios from 'axios';
-    import MutationTypes from '../store/auth/MutationTypes';
+    import * as MutationTypes from '../store/auth/MutationTypes';
 
     export default {
         data() {
@@ -86,6 +86,7 @@
                     .then(function (response) {
                         console.log(response);
                         if (response.data.meta.status === "ok") {
+                            component.$store.dispatch(MutationTypes.SAVE_USER, response);
                             component.$router.push('home');
                         } else {
                             component.message = response.data.meta.message;

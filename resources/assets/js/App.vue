@@ -28,12 +28,22 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        <li>
-                            <router-link to="/">Login</router-link>
-                        </li>
-                        <li>
-                            <router-link to="signup">Register</router-link>
-                        </li>
+                        <template v-if="isLoggedIn">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">
+                                    {{authUser.name}}<span class="caret"></span>
+                                </a>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li>
+                                <router-link to="/">Login</router-link>
+                            </li>
+                            <li>
+                                <router-link to="signup">Register</router-link>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </div>
@@ -44,6 +54,14 @@
 
 <script>
     export default {
+        computed: {
+            authUser() {
+                return this.$store.getters.authUser;
+            },
+            isLoggedIn() {
+                return this.$store.getters.isLoggedIn;
+            }
+        },
         mounted() {
         }
     }

@@ -9,8 +9,8 @@ const state = {
 
 const mutations = {
     [MutationTypes.SAVE_USER](state, response) {
-        state.token = response.data.token;
-        state.user.name = response.data.user.name;
+        state.token = response.data.data.token;
+        state.user.name = response.data.data.user.name;
     },
     [MutationTypes.LOGOUT](state) {
         state.token = '';

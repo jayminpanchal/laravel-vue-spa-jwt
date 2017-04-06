@@ -10567,8 +10567,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
 /* eslint-disable no-new */
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
+  store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */],
   router: __WEBPACK_IMPORTED_MODULE_1__router__["a" /* default */],
-  store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */],
   template: '<App/>',
   components: { App: __WEBPACK_IMPORTED_MODULE_2__App_vue___default.a }
 });
@@ -11464,8 +11464,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    computed: {
+        authUser: function authUser() {
+            return this.$store.getters.authUser;
+        },
+        isLoggedIn: function isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
+        }
+    },
     mounted: function mounted() {}
 });
 
@@ -11618,6 +11636,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/login', authenticate).then(function (response) {
                 console.log(response);
                 if (response.data.meta.status === "ok") {
+                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["a" /* SAVE_USER */], response);
                     component.$router.push('home');
                 } else {
                     component.message = response.data.meta.message;
@@ -11885,8 +11904,8 @@ var state = {
 };
 
 var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* SAVE_USER */], function (state, response) {
-    state.token = response.data.token;
-    state.user.name = response.data.user.name;
+    state.token = response.data.data.token;
+    state.user.name = response.data.data.user.name;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* LOGOUT */], function (state) {
     state.token = '';
     state.user.name = '';
@@ -11942,17 +11961,18 @@ var getters = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth__ = __webpack_require__(37);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
         auth: __WEBPACK_IMPORTED_MODULE_2__auth__["a" /* default */]
     }
-}));
+});
 
 /***/ }),
 /* 39 */
@@ -42267,7 +42287,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "nav navbar-nav"
   }, [_vm._v("\n                     \n                ")]), _vm._v(" "), _c('ul', {
     staticClass: "nav navbar-nav navbar-right"
-  }, [_c('li', [_c('router-link', {
+  }, [(_vm.isLoggedIn) ? [_c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.authUser.name)), _c('span', {
+    staticClass: "caret"
+  })])])] : [_c('li', [_c('router-link', {
     attrs: {
       "to": "/"
     }
@@ -42275,7 +42307,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": "signup"
     }
-  }, [_vm._v("Register")])], 1)])])])]), _vm._v(" "), _c('router-view')], 1)
+  }, [_vm._v("Register")])], 1)]], 2)])])]), _vm._v(" "), _c('router-view')], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "navbar-header"
