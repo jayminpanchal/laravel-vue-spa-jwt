@@ -17,6 +17,7 @@ const mutations = {
     [MutationTypes.LOGOUT](state) {
         state.token = '';
         state.user.name = '';
+        Cookies.remove('auth_token')
     },
     [MutationTypes.FETCH_USER_SUCCESS](state, user) {
         state.user.name = user.name;

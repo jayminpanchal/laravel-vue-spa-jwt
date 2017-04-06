@@ -34,6 +34,14 @@
                                    aria-expanded="false">
                                     {{authUser.name}}<span class="caret"></span>
                                 </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="javascript:void(0);" v-on:click="logout">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </template>
                         <template v-else>
@@ -53,6 +61,8 @@
 </template>
 
 <script>
+    import * as MutationTypes from './store/auth/MutationTypes';
+
     export default {
         computed: {
             authUser() {
@@ -66,6 +76,13 @@
             }
         },
         mounted() {
+        },
+        methods: {
+            logout(event) {
+                let component = this;
+                component.$store.dispatch(MutationTypes.LOGOUT);
+                component.$router.push('/');
+            }
         }
     }
 </script>

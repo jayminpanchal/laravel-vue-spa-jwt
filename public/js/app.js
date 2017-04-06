@@ -11420,6 +11420,15 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_auth_MutationTypes__ = __webpack_require__(36);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11475,6 +11484,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     computed: {
         authUser: function authUser() {
@@ -11487,7 +11498,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$store.getters.authToken;
         }
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {},
+
+    methods: {
+        logout: function logout(event) {
+            var component = this;
+            component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_0__store_auth_MutationTypes__["a" /* LOGOUT */]);
+            component.$router.push('/');
+        }
+    }
 });
 
 /***/ }),
@@ -11642,7 +11661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //                        console.log(response);
                 $("#btnLogin").button('reset');
                 if (response.data.meta.status === "ok") {
-                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["a" /* SAVE_USER */], response);
+                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["b" /* SAVE_USER */], response);
                     component.$router.push('home');
                 } else {
                     component.message = response.data.meta.message;
@@ -11879,8 +11898,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOGOUT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SAVE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGOUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SAVE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return UPDATE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return FETCH_USER_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FETCH_USER_FAILURE; });
@@ -11912,13 +11931,14 @@ var state = {
     token: __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.get('auth_token')
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* SAVE_USER */], function (state, response) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], function (state, response) {
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.set('auth_token', response.data.data.token);
     state.token = response.data.data.token;
     state.user.name = response.data.data.user.name;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* LOGOUT */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (state) {
     state.token = '';
     state.user.name = '';
+    __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.remove('auth_token');
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], function (state, user) {
     state.user.name = user.name;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_FAILURE */], function (state) {
@@ -11927,14 +11947,14 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["e" /* UPDATE_USER */], function (state, user) {
     state.user.name = user.name;
 }), _mutations);
-var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* SAVE_USER */], function (_ref, response) {
+var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], function (_ref, response) {
     var commit = _ref.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* SAVE_USER */], response);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* LOGOUT */], function (_ref2) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], response);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2) {
     var commit = _ref2.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* LOGOUT */]);
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
 }), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], function (_ref3, user) {
     var commit = _ref3.commit;
 
@@ -42309,7 +42329,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                " + _vm._s(_vm.authUser.name)), _c('span', {
     staticClass: "caret"
-  })])])] : [_c('li', [_c('router-link', {
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "javascript:void(0);"
+    },
+    on: {
+      "click": _vm.logout
+    }
+  }, [_vm._v("\n                                        Logout\n                                    ")])])])])] : [_c('li', [_c('router-link', {
     attrs: {
       "to": "/"
     }
