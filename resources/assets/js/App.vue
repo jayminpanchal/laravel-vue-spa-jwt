@@ -60,6 +60,9 @@
             },
             isLoggedIn() {
                 return this.$store.getters.isLoggedIn;
+            },
+            authToken() {
+                return this.$store.getters.authToken;
             }
         },
         mounted() {

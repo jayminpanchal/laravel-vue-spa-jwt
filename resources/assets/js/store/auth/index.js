@@ -1,14 +1,16 @@
 import * as MutationTypes from './MutationTypes';
+import Cookies from "js-cookie";
 
 const state = {
     user: {
         name: ''
     },
-    token: ''
+    token: Cookies.get('auth_token')
 };
 
 const mutations = {
     [MutationTypes.SAVE_USER](state, response) {
+        Cookies.set('auth_token', response.data.data.token);
         state.token = response.data.data.token;
         state.user.name = response.data.data.user.name;
     },
@@ -44,7 +46,7 @@ const actions = {
 const getters = {
     authUser: state => state.user,
     authToken: state => state.token,
-    isLoggedIn: state => state.token !== ''
+    isLoggedIn: state => state.token !== undefined
 };
 export default {
     state,
