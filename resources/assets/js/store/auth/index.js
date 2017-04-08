@@ -48,12 +48,11 @@ const actions = {
         axios.get('/api/user')
             .then((response) => {
                 console.log(response);
-                //const user = response.data.data;
-                /*if (user) {
-                    commit(MutationTypes.FETCH_USER_SUCCESS, user);
-                } else {
+                if (response.data.meta.status==='ok'){
+                    commit(MutationTypes.FETCH_USER_SUCCESS, response.data.data.user);
+                }else {
                     commit(MutationTypes.LOGOUT)
-                }*/
+                }
             });
     }
 };

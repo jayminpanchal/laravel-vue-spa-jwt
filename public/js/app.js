@@ -10557,6 +10557,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_resource__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_interceptors__ = __webpack_require__(66);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -10573,6 +10574,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 __webpack_require__(35);
+
 
 
 
@@ -11990,12 +11992,11 @@ var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODUL
 
     __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/user').then(function (response) {
         console.log(response);
-        //const user = response.data.data;
-        /*if (user) {
-            commit(MutationTypes.FETCH_USER_SUCCESS, user);
+        if (response.data.meta.status === 'ok') {
+            commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_SUCCESS */], response.data.data.user);
         } else {
-            commit(MutationTypes.LOGOUT)
-        }*/
+            commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
+        }
     });
 }), _actions);
 var getters = {
@@ -47672,6 +47673,35 @@ module.exports = function(module) {
 __webpack_require__(12);
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(38);
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.request.use(function (config) {
+    if (__WEBPACK_IMPORTED_MODULE_1__store__["a" /* store */].getters.authToken) {
+        config.headers.common['Authorization'] = 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store__["a" /* store */].getters.authToken;
+    }
+
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+});
 
 /***/ })
 /******/ ]);

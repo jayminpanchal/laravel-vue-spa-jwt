@@ -19,6 +19,7 @@ import router from "./router";
 import App from "./App.vue";
 import VueResource from "vue-resource";
 import {store} from './store';
+import './utils/interceptors';
 
 Vue.config.productionTip = false;
 Vue.use(VueResource);

@@ -58,7 +58,7 @@ class UserController extends Controller
             return response()->json($this->setResponse());
         }
         $this->setMeta('status', 'ok');
-        $this->setData('user', $user);
+        $this->setData('user', $user->makeHidden(['created_at', 'updated_at', 'id']));
         return response()->json($this->setResponse());
     }
 }
