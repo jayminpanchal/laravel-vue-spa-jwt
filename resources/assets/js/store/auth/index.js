@@ -47,12 +47,13 @@ const actions = {
     [MutationTypes.FETCH_USER]({commit}) {
         axios.get('/api/user')
             .then((response) => {
-                const user = response.data.data;
-                if (user) {
+                console.log(response);
+                //const user = response.data.data;
+                /*if (user) {
                     commit(MutationTypes.FETCH_USER_SUCCESS, user);
                 } else {
                     commit(MutationTypes.LOGOUT)
-                }
+                }*/
             });
     }
 };

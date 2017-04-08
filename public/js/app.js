@@ -542,11 +542,11 @@ module.exports = defaults;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGOUT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SAVE_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return UPDATE_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return FETCH_USER_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FETCH_USER_FAILURE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return FETCH_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SAVE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return UPDATE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FETCH_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return FETCH_USER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FETCH_USER; });
 var LOGOUT = 'LOGOUT';
 var SAVE_USER = 'SAVE_USER';
 var UPDATE_USER = 'UPDATE_USER';
@@ -11679,7 +11679,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //                        console.log(response);
                 $("#btnLogin").button('reset');
                 if (response.data.meta.status === "ok") {
-                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["b" /* SAVE_USER */], response);
+                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["c" /* SAVE_USER */], response);
                     component.$router.push('home');
                 } else {
                     component.message = response.data.meta.message;
@@ -11887,6 +11887,10 @@ if (token) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SignUp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_SignUp_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Home_vue__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store_auth_MutationTypes__ = __webpack_require__(4);
+
+
 
 
 
@@ -11895,7 +11899,7 @@ if (token) {
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: [{
         path: '/',
         name: 'login',
@@ -11909,7 +11913,20 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
         name: 'home',
         component: __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default.a
     }]
-}));
+});
+
+router.beforeEach(function (to, from, next) {
+    if (__WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */].getters.isLoggedIn) {
+        console.log("logged in");
+        __WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */].dispatch(__WEBPACK_IMPORTED_MODULE_6__store_auth_MutationTypes__["b" /* FETCH_USER */]).then(function () {
+            return next();
+        });
+    } else {
+        console.log("not logged in");
+        next();
+    }
+});
+/* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 /* 37 */
@@ -11936,7 +11953,7 @@ var state = {
     token: __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.get('auth_token')
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], function (state, response) {
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], function (state, response) {
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.set('auth_token', response.data.data.token);
     state.token = response.data.data.token;
     state.user.name = response.data.data.user.name;
@@ -11944,40 +11961,41 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     state.token = '';
     state.user.name = '';
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.remove('auth_token');
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], function (state, user) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_SUCCESS */], function (state, user) {
     state.user.name = user.name;
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_FAILURE */], function (state) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["e" /* FETCH_USER_FAILURE */], function (state) {
     state.user.name = '';
     state.token = '';
-}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["e" /* UPDATE_USER */], function (state, user) {
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["f" /* UPDATE_USER */], function (state, user) {
     state.user.name = user.name;
 }), _mutations);
-var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], function (_ref, response) {
+var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], function (_ref, response) {
     var commit = _ref.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* SAVE_USER */], response);
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], response);
 }), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2) {
     var commit = _ref2.commit;
 
     commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], function (_ref3, user) {
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_SUCCESS */], function (_ref3, user) {
     var commit = _ref3.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], user);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_FAILURE */], function (_ref4) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_SUCCESS */], user);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["e" /* FETCH_USER_FAILURE */], function (_ref4) {
     var commit = _ref4.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_FAILURE */]);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["f" /* FETCH_USER */], function (_ref5) {
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["e" /* FETCH_USER_FAILURE */]);
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* FETCH_USER */], function (_ref5) {
     var commit = _ref5.commit;
 
     __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/user').then(function (response) {
-        var user = response.data.data;
-        if (user) {
-            commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* FETCH_USER_SUCCESS */], user);
+        console.log(response);
+        //const user = response.data.data;
+        /*if (user) {
+            commit(MutationTypes.FETCH_USER_SUCCESS, user);
         } else {
-            commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
-        }
+            commit(MutationTypes.LOGOUT)
+        }*/
     });
 }), _actions);
 var getters = {
