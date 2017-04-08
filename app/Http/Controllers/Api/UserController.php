@@ -50,4 +50,15 @@ class UserController extends Controller
         // all good so return the token
         return response()->json($this->setResponse());
     }
+
+    public function getUser()
+    {
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            $this->setMeta('status', 'fail');
+            return response()->json($this->setResponse());
+        }
+        $this->setMeta('status', 'ok');
+        $this->setData('user', $user);
+        return response()->json($this->setResponse());
+    }
 }

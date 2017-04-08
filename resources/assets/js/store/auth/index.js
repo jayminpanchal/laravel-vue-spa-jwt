@@ -1,5 +1,6 @@
 import * as MutationTypes from './MutationTypes';
 import Cookies from "js-cookie";
+import axios from "axios";
 
 const state = {
     user: {
@@ -42,6 +43,17 @@ const actions = {
     },
     [MutationTypes.FETCH_USER_FAILURE]({commit}) {
         commit(MutationTypes.FETCH_USER_FAILURE);
+    },
+    [MutationTypes.FETCH_USER]({commit}) {
+        axios.get('/api/user')
+            .then((response) => {
+                const user = response.data.data;
+                if (user) {
+                    commit(MutationTypes.FETCH_USER_SUCCESS, user);
+                } else {
+                    commit(MutationTypes.LOGOUT)
+                }
+            });
     }
 };
 const getters = {
